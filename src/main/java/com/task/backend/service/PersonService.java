@@ -31,21 +31,26 @@ public class PersonService {
                                 String personAddress, String personResume,
                                 LocalDateTime personCreateAt, LocalDateTime personUpdateAt,
                                 String personStatus){
-        PersonModel personModel = new PersonModel();
+        Optional<PersonModel> personOpt = personRepository.findByPersonEmail(personEmail);
+        if (personOpt.isEmpty()) {
+            PersonModel personModel = new PersonModel();
 //        personModel.setPersonId(personId);
-        personModel.setPersonName(personName);
-        personModel.setPersonPassword(personPassword);
-        personModel.setPersonEmail(personEmail);
-        personModel.setPersonPhone(personPhone);
-        personModel.setPersonAddress(personAddress);
-        personModel.setPersonResume(personResume);
-        personModel.setPersonCreateAt(personCreateAt);
-        personModel.setPersonUpdateAt(personUpdateAt);
-        personModel.setPersonStatus(personStatus);
+            personModel.setPersonName(personName);
+            personModel.setPersonPassword(personPassword);
+            personModel.setPersonEmail(personEmail);
+            personModel.setPersonPhone(personPhone);
+            personModel.setPersonAddress(personAddress);
+            personModel.setPersonResume(personResume);
+            personModel.setPersonCreateAt(personCreateAt);
+            personModel.setPersonUpdateAt(personUpdateAt);
+            personModel.setPersonStatus(personStatus);
 
-        personRepository.save(personModel);
+            personRepository.save(personModel);
 
-        return true;
+            return true;
+        } else {
+            return false;
+        }
     }
     public PersonModel getEmail(String personEmail) {
         Optional<PersonModel> personOpt = personRepository.findByPersonEmail(personEmail);

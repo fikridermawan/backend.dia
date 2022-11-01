@@ -35,11 +35,11 @@ public class PersonModel {
     private String personResume;
     @JsonSerialize(using = LocalDateTimeSerializer.class)
     @JsonDeserialize(using = LocalDateTimeDeserializer.class)
-    @JsonFormat(pattern = "dd-MMMM-yyyy hh:mm:ss", shape = JsonFormat.Shape.STRING)
+    @JsonFormat(pattern = "dd-MM-yyyy hh:mm:ss", shape = JsonFormat.Shape.STRING)
     @Column(name = "create_at")
     private LocalDateTime personCreateAt;@JsonSerialize(using = LocalDateTimeSerializer.class)
     @JsonDeserialize(using = LocalDateTimeDeserializer.class)
-    @JsonFormat(pattern = "dd-MMMM-yyyy hh:mm:ss", shape = JsonFormat.Shape.STRING)
+    @JsonFormat(pattern = "dd-MM-yyyy hh:mm:ss", shape = JsonFormat.Shape.STRING)
     @Column(name = "update_at")
     private LocalDateTime personUpdateAt;
     @Column(name = "status",  columnDefinition = "enum('Y','N'")
