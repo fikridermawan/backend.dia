@@ -1,8 +1,16 @@
-package com.task.backend;
+package com.task.backend.controller;
 
+import com.task.backend.model.request.PersonIdRequest;
+import com.task.backend.model.PersonModel;
+import com.task.backend.service.PersonService;
+import com.task.backend.utils.response.DataResponse;
+import com.task.backend.utils.response.HandlerResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.time.LocalDateTime;
 import java.util.List;
 
 @RestController
@@ -17,37 +25,48 @@ public class PersonController {
     }
 
     @GetMapping("/person")
-    public List<PersonModel> getAllPerson() {
-        return personService.getAllPerson();
+    public void getAllPerson(HttpServletRequest request, HttpServletResponse response) {
+        DataResponse<List<PersonModel>> data = new DataResponse<>();
+        data.setData(personService.getAllPerson());
+        HandlerResponse.responseSuccessWithData(response, data);
     }
 
     @GetMapping("/person/{personId}")
-    public PersonModel getPerson(@PathVariable int personId) {
+    public void getPerson(HttpServletRequest request, HttpServletResponse response,
+                                 @PathVariable int personId) {
         PersonModel person = personService.getPerson(personId);
         if (person == null) {
-            return new PersonModel();
+            HandlerResponse.responseBadRequest(response, "02", "Failed");
         } else {
-            return person;
+            DataResponse<PersonModel> data = new DataResponse<>();
+            data.setData(person);
+            HandlerResponse.responseSuccessWithData(response, data);
         }
     }
 
     @GetMapping("/person/param")
-    public PersonModel getPersonParam(@RequestParam("personId") int personId){
+    public void getPersonParam(HttpServletRequest request, HttpServletResponse response,
+                                      @RequestParam("personId") int personId){
         PersonModel person = personService.getPerson(personId);
         if (person == null) {
-            return new PersonModel();
+            HandlerResponse.responseBadRequest(response, "02", "Failed");
         } else {
-            return person;
+            DataResponse<PersonModel> data = new DataResponse<>();
+            data.setData(person);
+            HandlerResponse.responseSuccessWithData(response, data);
         }
     }
 
     @GetMapping("/person/body")
-    public PersonModel getPersonBody(@RequestBody PersonIdRequest personIdRequest) {
+    public void getPersonBody(HttpServletRequest request, HttpServletResponse response,
+                                     @RequestBody PersonIdRequest personIdRequest) {
         PersonModel person = personService.getPerson(personIdRequest.getPersonId());
         if (person == null) {
-            return new PersonModel();
+            HandlerResponse.responseBadRequest(response, "02", "Failed");
         } else {
-            return person;
+            DataResponse<PersonModel> data = new DataResponse<>();
+            data.setData(person);
+            HandlerResponse.responseSuccessWithData(response, data);
         }
     }
 
@@ -61,13 +80,16 @@ public class PersonController {
 //        }
 //    }
     @GetMapping("/person/login/{personEmail}/{personPassword}")
-    public PersonModel getPersonLogin(@PathVariable("personEmail") String personEmail,
+    public void getPersonLogin(HttpServletRequest request, HttpServletResponse response,
+                                      @PathVariable("personEmail") String personEmail,
                                       @PathVariable("personPassword") String personPassword) {
         PersonModel person = personService.getPersonLogin(personEmail, personPassword);
         if (person == null) {
-            return new PersonModel();
+            HandlerResponse.responseBadRequest(response, "02", "Failed");
         } else {
-            return person;
+            DataResponse<PersonModel> data = new DataResponse<>();
+            data.setData(person);
+            HandlerResponse.responseSuccessWithData(response, data);
         }
     }
 //    @GetMapping("/person/login/body")
@@ -80,13 +102,16 @@ public class PersonController {
 //        }
 //    }
     @GetMapping("/person/login/param")
-    public PersonModel getPersonLoginParam(@RequestParam("personEmail") String personEmail,
+    public void getPersonLoginParam(HttpServletRequest request, HttpServletResponse response,
+                                           @RequestParam("personEmail") String personEmail,
                                            @RequestParam("personPassword") String personPassword){
         PersonModel person = personService.getPersonLoginParam(personEmail, personPassword);
         if (person == null) {
-            return new PersonModel();
+            HandlerResponse.responseBadRequest(response, "02", "Failed");
         } else {
-            return person;
+            DataResponse<PersonModel> data = new DataResponse<>();
+            data.setData(person);
+            HandlerResponse.responseSuccessWithData(response, data);
         }
     }
 
@@ -98,8 +123,8 @@ public class PersonController {
                                @RequestParam("personPhone") String personPhone,
                                @RequestParam("personAddress") String personAddress,
                                @RequestParam("personResume") String personResume,
-                               @RequestParam("personCreateAt") String personCreateAt,
-                               @RequestParam("personUpdateAt") String personUpdateAt,
+                               @RequestParam("personCreateAt") LocalDateTime personCreateAt,
+                               @RequestParam("personUpdateAt") LocalDateTime personUpdateAt,
                                @RequestParam("personStatus") String personStatus) {
         if(personService.createPerson(personName, personPassword, personEmail, personPhone,
                 personAddress, personResume, personCreateAt, personUpdateAt, personStatus)) {

@@ -1,7 +1,10 @@
-package com.task.backend;
+package com.task.backend.service;
 
+import com.task.backend.model.PersonModel;
+import com.task.backend.repository.PersonRepository;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 
@@ -9,6 +12,11 @@ import java.util.Optional;
 public class PersonService {
 
     private PersonRepository personRepository;
+    private boolean personStatus;
+
+    public boolean isPersonStatus() {
+        return personStatus;
+    }
 
     public PersonService(PersonRepository personRepository){
         this.personRepository = personRepository;
@@ -21,7 +29,7 @@ public class PersonService {
     public boolean createPerson(String personName, String personPassword,
                                 String personEmail, String personPhone,
                                 String personAddress, String personResume,
-                                String personCreateAt, String personUpdateAt,
+                                LocalDateTime personCreateAt, LocalDateTime personUpdateAt,
                                 String personStatus){
         PersonModel personModel = new PersonModel();
 //        personModel.setPersonId(personId);

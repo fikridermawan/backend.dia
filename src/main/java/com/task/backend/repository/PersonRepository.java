@@ -1,5 +1,6 @@
-package com.task.backend;
+package com.task.backend.repository;
 
+import com.task.backend.model.PersonModel;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.Optional;

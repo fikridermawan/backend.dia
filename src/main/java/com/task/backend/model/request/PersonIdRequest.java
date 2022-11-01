@@ -1,4 +1,4 @@
-package com.task.backend;
+package com.task.backend.model.request;
 
 import lombok.Getter;
 import lombok.Setter;
